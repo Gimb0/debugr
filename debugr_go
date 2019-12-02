@@ -1,0 +1,33 @@
+#!/bin/bash
+
+OUTDIR=out
+DEFAULT_TARGET=build
+BASE_DIR=$(dirname $0)
+
+function main {
+	if [ "$1" == "" ]; then
+		TARGET=$DEFAULT_TARGET
+	else
+		TARGET=$1
+	fi
+	
+	$TARGET
+}
+
+function build {
+	echo "[*] Building debugr"
+	mkdir -p $OUTDIR
+	cd $OUTDIR
+	cmake ..
+	make
+	echo "[*] debugr built in $OUTDIR"
+}
+
+function clean {
+	echo "[*] Cleaning environment"
+	rm -rf $OUTDIR
+	echo "[*] Removed $OUTDIR" 
+}
+
+cd $BASE_DIR
+main $*
