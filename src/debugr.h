@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
 #include <sys/ptrace.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <unistd.h>
 #include <sys/errno.h>
 
 static const pid_t ignored_pid;
@@ -32,7 +33,7 @@ static void attach_to_inferior(pid_t pid)
 		else if(WIFEXITED(status))
 		{
 			printf("Inferior exited - debugger terminating...\n");
-			exit(0);
+			return;
 		}
 	}
 }

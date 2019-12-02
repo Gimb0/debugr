@@ -18,15 +18,12 @@ function build {
 	echo "[*] Building debugr"
 	mkdir -p $OUTDIR
 	cd $OUTDIR
-	cmake ..
-	make
-	echo "[*] debugr built in $OUTDIR"
+	cmake -B . -S .. && make && cd ..
 }
 
 function clean {
 	echo "[*] Cleaning environment"
 	rm -rf $OUTDIR
-	echo "[*] Removed $OUTDIR" 
 }
 
 cd $BASE_DIR
