@@ -2,7 +2,7 @@ language: c
 
 compiler: 
   - gcc
-  - clage
+  - clang
 
 before_script:
   - mkdir out
