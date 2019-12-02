@@ -1,3 +1,5 @@
+#define _POSIX_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -10,6 +12,16 @@
 static const pid_t ignored_pid;
 static const void *ignored_ptr;
 
+/*
+	Description: configure ptrace options and execute passed executable
+
+	Input:
+		- (char * / string) path to executable
+		- (char *[] / array of strings) arguments to execute with executable
+
+	Output:
+		- null
+*/
 static void setup_inferior(const char *path, char *const argv[])
 {
 	ptrace(PTRACE_TRACEME, ignored_pid, ignored_ptr, ignored_ptr);
@@ -18,6 +30,15 @@ static void setup_inferior(const char *path, char *const argv[])
 
 static const void *no_continue_signal = 0;
 
+/*
+	Description: Control execution of child process
+
+	Input:
+		- (pid_t) process id
+
+	Output:
+		- null
+*/
 static void attach_to_inferior(pid_t pid)
 {
 	while(1)
@@ -38,6 +59,16 @@ static void attach_to_inferior(pid_t pid)
 	}
 }
 
+/*
+	Description: Create child process and call function to configure ptrace
+
+	Input:
+		- (char * / string) path to executable
+		- (char *[] / array of strings) arguments to execute with executable
+
+	Output:
+		- null
+*/
 void dbg_inferior_exec(const char *path, char *const argv[])
 {
 	pid_t result;
